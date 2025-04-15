@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motos - Prado Motors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            background-image: radial-gradient(#ff0101, #000000);
+        }
+
+        header {
+            background-color: #000;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav .active a {
+            color: #beff1b;
+        }
+
+        .motos-page {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+
+        .filtros-sidebar {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            height: fit-content;
+            border: 1px solid #beff1b;
+        }
+
+        .filtros-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .filtros-header h3 {
+            font-size: 18px;
+            color: #fff;
+        }
+
+        .limpar-filtros {
+            color: #ff0101;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .filtro-grupo {
+            margin-bottom: 20px;
+        }
+
+        .filtro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .filtro-header h4 {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .filtro-opcoes {
+            display: none;
+        }
+
+        .filtro-opcoes.active {
+            display: block;
+        }
+
+        .filtro-opcao {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #d9d9d9;
+        }
+
+        .qtd {
+            color: #d9d9d9;
+            font-size: 14px;
+        }
+
+        .ordenacao-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .resultados {
+            color: #d9d9d9;
+        }
+
+        .ordenacao {
+            padding: 8px;
+            border: 1px solid #beff1b;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+        }
+
+        .motos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .moto-card {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
+            border: 1px solid #fff;
+        }
+
+        .moto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .moto-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #beff1b;
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .moto-imagem {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .moto-info {
+            padding: 15px;
+        }
+
+        .moto-titulo {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .moto-detalhes {
+            margin-bottom: 15px;
+        }
+
+        .ano-km {
+            color: #d9d9d9;
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .preco-container {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .preco {
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .parcelamento {
+            color: #d9d9d9;
+            font-size: 14px;
+        }
+
+        .btn-detalhes {
+            width: 100%;
+            padding: 10px;
+            background: #beff1b;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-detalhes:hover {
+            background: #a3e000;
+        }
+
+        .paginacao {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .pagina {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #beff1b;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #fff;
+        }
+
+        .pagina.ativa {
+            background: #beff1b;
+            border-color: #beff1b;
+            color: #000;
+        }
+
+        .filtros-mobile-btn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #beff1b;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(190, 255, 27, 0.2);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+        }
+
+        @media (max-width: 768px) {
+            .motos-page {
+                grid-template-columns: 1fr;
+            }
+
+            .filtros-sidebar {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 90%;
+                max-width: 400px;
+                z-index: 1000;
+            }
+
+            .filtros-sidebar.active {
+                display: block;
+            }
+
+            .filtros-mobile-btn {
+                display: block;
+            }
+
+            .overlay.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <img src="/img/logo loja.png" alt="Prado Motors" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active"><a href="motos.html">Motos</a></li>
+                    <li><a href="boutique.html">Boutique</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="seguros.html">Seguros</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="motos-page">
+        <aside class="filtros-sidebar">
+            <div class="filtros-header">
+                <h3>Filtros</h3>
+                <button class="limpar-filtros">Limpar tudo</button>
+            </div>
+            
+            <div class="filtro-grupo">
+                <div class="filtro-header">
+                    <h4>Preço</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filtro-opcoes">
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        Até R$ 15.000
+                        <span class="qtd">(12)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        R$ 15.000 - R$ 25.000
+                        <span class="qtd">(25)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        R$ 25.000 - R$ 35.000
+                        <span class="qtd">(18)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        Acima de R$ 35.000
+                        <span class="qtd">(15)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="filtro-grupo">
+                <div class="filtro-header">
+                    <h4>Marca</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filtro-opcoes">
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        Honda
+                        <span class="qtd">(45)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        Yamaha
+                        <span class="qtd">(32)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        Suzuki
+                        <span class="qtd">(18)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        Kawasaki
+                        <span class="qtd">(12)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="filtro-grupo">
+                <div class="filtro-header">
+                    <h4>Ano</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filtro-opcoes">
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        2024
+                        <span class="qtd">(15)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        2023
+                        <span class="qtd">(28)</span>
+                    </label>
+                    <label class="filtro-opcao">
+                        <input type="checkbox">
+                        2022
+                        <span class="qtd">(35)</span>
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <div class="conteudo-principal">
+            <div class="ordenacao-container">
+                <span class="resultados">70 motos encontradas</span>
+                <select class="ordenacao">
+                    <option>Mais relevantes</option>
+                    <option>Menor preço</option>
+                    <option>Maior preço</option>
+                    <option>Mais recentes</option>
+                </select>
+            </div>
+
+            <div class="motos-grid">
+                <!-- Card de Moto 1 -->
+                <div class="moto-card">
+                    <div class="moto-badge seminova">0KM ou Semi-Nova</div>
+                    <img src="img/1.png" alt="Honda PCX" class="moto-imagem">
+                    <div class="moto-info">
+                        <h3 class="moto-titulo">Honda PCX 160 2024</h3>
+                        <div class="moto-detalhes">
+                            <span class="ano-km">2024 • 0 km</span>
+                            <div class="preco-container">
+                                <span class="preco">R$ 24.990</span>
+                                <span class="parcelamento">ou 12x R$ 2.499</span>
+                            </div>
+                        </div>
+                        <button class="btn-detalhes">Ver detalhes</button>
+                    </div>
+                </div>
+
+                <!-- Card de Moto 2 -->
+                <div class="moto-card">
+                    <div class="moto-badge seminova">0KM ou Semi-Nova</div>
+                    <img src="img/2.png" alt="Yamaha XMAX" class="moto-imagem">
+                    <div class="moto-info">
+                        <h3 class="moto-titulo">Yamaha XMAX 300 2024</h3>
+                        <div class="moto-detalhes">
+                            <span class="ano-km">2024 • 0 km</span>
+                            <div class="preco-container">
+                                <span class="preco">R$ 32.990</span>
+                                <span class="parcelamento">ou 12x R$ 3.299</span>
+                            </div>
+                        </div>
+                        <button class="btn-detalhes">Ver detalhes</button>
+                    </div>
+                </div>
+
+                <!-- Card de Moto 3 -->
+                <div class="moto-card">
+                    <div class="moto-badge seminova">0KM</div>
+                    <img src="img/3.png" alt="Yamaha Fazer" class="moto-imagem">
+                    <div class="moto-info">
+                        <h3 class="moto-titulo">Yamaha Fazer FZ25 2024</h3>
+                        <div class="moto-detalhes">
+                            <span class="ano-km">2024 • 0 km</span>
+                            <div class="preco-container">
+                                <span class="preco">R$ 19.990</span>
+                                <span class="parcelamento">ou 12x R$ 1.999</span>
+                            </div>
+                        </div>
+                        <button class="btn-detalhes">Ver detalhes</button>
+                    </div>
+                </div>
+
+                <!-- Card de Moto 4 -->
+                <div class="moto-card">
+                    <div class="moto-badge seminova">0KM ou Semi-Nova</div>
+                    <img src="img/4.png" alt="Honda Titan" class="moto-imagem">
+                    <div class="moto-info">
+                        <h3 class="moto-titulo">Honda Titan 160 2024</h3>
+                        <div class="moto-detalhes">
+                            <span class="ano-km">2024 • 0 km</span>
+                            <div class="preco-container">
+                                <span class="preco">R$ 16.990</span>
+                                <span class="parcelamento">ou 12x R$ 1.699</span>
+                            </div>
+                        </div>
+                        <button class="btn-detalhes">Ver detalhes</button>
+                    </div>
+                </div>
+
+                <!-- Card de Moto 5 -->
+                <div class="moto-card">
+                    <div class="moto-badge seminova">0KM ou Semi-Nova</div>
+                    <img src="img/5.png" alt="Honda Fan" class="moto-imagem">
+                    <div class="moto-info">
+                        <h3 class="moto-titulo">Honda Fan 160 2024</h3>
+                        <div class="moto-detalhes">
+                            <span class="ano-km">2024 • 0 km</span>
+                            <div class="preco-container">
+                                <span class="preco">R$ 15.990</span>
+                                <span class="parcelamento">ou 12x R$ 1.599</span>
+                            </div>
+                        </div>
+                        <button class="btn-detalhes">Ver detalhes</button>
+                    </div>
+                </div>
+
+                <!-- Card de Moto 6 -->
+                <div class="moto-card">
+                    <div class="moto-badge seminova">0KM ou Semi-Nova</div>
+                    <img src="img/6.png" alt="Yamaha NMAX" class="moto-imagem">
+                    <div class="moto-info">
+                        <h3 class="moto-titulo">Yamaha NMAX 125 2024</h3>
+                        <div class="moto-detalhes">
+                            <span class="ano-km">2024 • 0 km</span>
+                            <div class="preco-container">
+                                <span class="preco">R$ 18.990</span>
+                                <span class="parcelamento">ou 12x R$ 1.899</span>
+                            </div>
+                        </div>
+                        <button class="btn-detalhes">Ver detalhes</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="paginacao">
+                <button class="pagina ativa">1</button>
+                <button class="pagina">2</button>
+                <button class="pagina">3</button>
+                <button class="pagina">4</button>
+                <button class="pagina">5</button>
+            </div>
+        </div>
+
+        <button class="filtros-mobile-btn"><i class="fas fa-filter"></i> Filtrar</button>
+        <div class="overlay"></div>
+    </main>
+
+    <script>
+        // Toggle dos filtros
+        document.querySelectorAll('.filtro-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const opcoes = header.nextElementSibling;
+                opcoes.classList.toggle('active');
+                const icon = header.querySelector('i');
+                icon.style.transform = opcoes.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+            });
+        });
+
+        // Toggle do menu de filtros mobile
+        const filtrosBtn = document.querySelector('.filtros-mobile-btn');
+        const filtrosSidebar = document.querySelector('.filtros-sidebar');
+        const overlay = document.querySelector('.overlay');
+
+        filtrosBtn.addEventListener('click', () => {
+            filtrosSidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            filtrosSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Limpar filtros
+        document.querySelector('.limpar-filtros').addEventListener('click', () => {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+        });
+    </script>
+</body>
+</html>
