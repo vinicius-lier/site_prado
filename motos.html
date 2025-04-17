@@ -164,9 +164,11 @@
             background: rgba(0, 0, 0, 0.8);
             border-radius: 8px;
             overflow: hidden;
-            transition: transform 0.3s;
-            position: relative;
             border: 1px solid #fff;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: auto;
         }
 
         .moto-card:hover {
@@ -186,14 +188,21 @@
             font-weight: bold;
         }
 
-        .moto-imagem {
+        .moto-card img {
             width: 100%;
             height: 200px;
-            object-fit: cover;
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px 8px 0 0;
+            padding: 10px;
         }
 
         .moto-info {
-            padding: 15px;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .moto-titulo {
@@ -217,6 +226,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            margin-bottom: 15px;
         }
 
         .preco {
@@ -230,8 +240,13 @@
             font-size: 14px;
         }
 
+        .botoes-container {
+            display: flex;
+            gap: 10px;
+        }
+
         .btn-detalhes {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             background: #beff1b;
             color: #000;
@@ -242,8 +257,24 @@
             transition: background 0.3s;
         }
 
+        .btn-whatsapp {
+            flex: 1;
+            padding: 10px;
+            background: #25D366;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
         .btn-detalhes:hover {
             background: #a3e000;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
         }
 
         .paginacao {
@@ -337,6 +368,7 @@
                     <li><a href="boutique.html">Boutique</a></li>
                     <li><a href="servicos.html">Serviços</a></li>
                     <li><a href="seguros.html">Seguros</a></li>
+                    <li><a href="admin-login.html" class="admin-btn"><i class="fas fa-lock"></i> Área Restrita</a></li>
                 </ul>
             </nav>
         </div>
@@ -447,103 +479,145 @@
                 <!-- Card de Moto 1 -->
                 <div class="moto-card">
                     <div class="moto-badge seminova">0KM ou Semi-Nova</div>
-                    <img src="img/1.png" alt="Honda PCX" class="moto-imagem">
-                    <div class="moto-info">
-                        <h3 class="moto-titulo">Honda PCX 160 2024</h3>
-                        <div class="moto-detalhes">
-                            <span class="ano-km">2024 • 0 km</span>
-                            <div class="preco-container">
-                                <span class="preco">R$ 24.990</span>
-                                <span class="parcelamento">ou 12x R$ 2.499</span>
+                    <a href="detalhes-moto.html?id=1">
+                        <img src="img/1.png" alt="Honda PCX" class="moto-imagem">
+                        <div class="moto-info">
+                            <h3 class="moto-titulo">Honda PCX 160 2024</h3>
+                            <div class="moto-detalhes">
+                                <span class="ano-km">2024 • 0 km</span>
+                                <div class="preco-container">
+                                    <span class="preco">R$ 24.990</span>
+                                    <span class="parcelamento">ou 12x R$ 2.499</span>
+                                </div>
+                            </div>
+                            <div class="botoes-container">
+                                <button class="btn-detalhes">Ver detalhes</button>
+                                <button class="btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
                             </div>
                         </div>
-                        <button class="btn-detalhes">Ver detalhes</button>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Card de Moto 2 -->
                 <div class="moto-card">
                     <div class="moto-badge seminova">0KM ou Semi-Nova</div>
-                    <img src="img/2.png" alt="Yamaha XMAX" class="moto-imagem">
-                    <div class="moto-info">
-                        <h3 class="moto-titulo">Yamaha XMAX 300 2024</h3>
-                        <div class="moto-detalhes">
-                            <span class="ano-km">2024 • 0 km</span>
-                            <div class="preco-container">
-                                <span class="preco">R$ 32.990</span>
-                                <span class="parcelamento">ou 12x R$ 3.299</span>
+                    <a href="detalhes-moto.html?id=2">
+                        <img src="img/2.png" alt="Yamaha XMAX" class="moto-imagem">
+                        <div class="moto-info">
+                            <h3 class="moto-titulo">Yamaha XMAX 300 2024</h3>
+                            <div class="moto-detalhes">
+                                <span class="ano-km">2024 • 0 km</span>
+                                <div class="preco-container">
+                                    <span class="preco">R$ 32.990</span>
+                                    <span class="parcelamento">ou 12x R$ 3.299</span>
+                                </div>
+                            </div>
+                            <div class="botoes-container">
+                                <button class="btn-detalhes">Ver detalhes</button>
+                                <button class="btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
                             </div>
                         </div>
-                        <button class="btn-detalhes">Ver detalhes</button>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Card de Moto 3 -->
                 <div class="moto-card">
                     <div class="moto-badge seminova">0KM</div>
-                    <img src="img/3.png" alt="Yamaha Fazer" class="moto-imagem">
-                    <div class="moto-info">
-                        <h3 class="moto-titulo">Yamaha Fazer FZ25 2024</h3>
-                        <div class="moto-detalhes">
-                            <span class="ano-km">2024 • 0 km</span>
-                            <div class="preco-container">
-                                <span class="preco">R$ 19.990</span>
-                                <span class="parcelamento">ou 12x R$ 1.999</span>
+                    <a href="detalhes-moto.html?id=3">
+                        <img src="img/3.png" alt="Yamaha Fazer" class="moto-imagem">
+                        <div class="moto-info">
+                            <h3 class="moto-titulo">Yamaha Fazer FZ25 2024</h3>
+                            <div class="moto-detalhes">
+                                <span class="ano-km">2024 • 0 km</span>
+                                <div class="preco-container">
+                                    <span class="preco">R$ 19.990</span>
+                                    <span class="parcelamento">ou 12x R$ 1.999</span>
+                                </div>
+                            </div>
+                            <div class="botoes-container">
+                                <button class="btn-detalhes">Ver detalhes</button>
+                                <button class="btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
                             </div>
                         </div>
-                        <button class="btn-detalhes">Ver detalhes</button>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Card de Moto 4 -->
                 <div class="moto-card">
                     <div class="moto-badge seminova">0KM ou Semi-Nova</div>
-                    <img src="img/4.png" alt="Honda Titan" class="moto-imagem">
-                    <div class="moto-info">
-                        <h3 class="moto-titulo">Honda Titan 160 2024</h3>
-                        <div class="moto-detalhes">
-                            <span class="ano-km">2024 • 0 km</span>
-                            <div class="preco-container">
-                                <span class="preco">R$ 16.990</span>
-                                <span class="parcelamento">ou 12x R$ 1.699</span>
+                    <a href="detalhes-moto.html?id=4">
+                        <img src="img/4.png" alt="Honda Titan" class="moto-imagem">
+                        <div class="moto-info">
+                            <h3 class="moto-titulo">Honda Titan 160 2024</h3>
+                            <div class="moto-detalhes">
+                                <span class="ano-km">2024 • 0 km</span>
+                                <div class="preco-container">
+                                    <span class="preco">R$ 16.990</span>
+                                    <span class="parcelamento">ou 12x R$ 1.699</span>
+                                </div>
+                            </div>
+                            <div class="botoes-container">
+                                <button class="btn-detalhes">Ver detalhes</button>
+                                <button class="btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
                             </div>
                         </div>
-                        <button class="btn-detalhes">Ver detalhes</button>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Card de Moto 5 -->
                 <div class="moto-card">
                     <div class="moto-badge seminova">0KM ou Semi-Nova</div>
-                    <img src="img/5.png" alt="Honda Fan" class="moto-imagem">
-                    <div class="moto-info">
-                        <h3 class="moto-titulo">Honda Fan 160 2024</h3>
-                        <div class="moto-detalhes">
-                            <span class="ano-km">2024 • 0 km</span>
-                            <div class="preco-container">
-                                <span class="preco">R$ 15.990</span>
-                                <span class="parcelamento">ou 12x R$ 1.599</span>
+                    <a href="detalhes-moto.html?id=5">
+                        <img src="img/5.png" alt="Honda Fan" class="moto-imagem">
+                        <div class="moto-info">
+                            <h3 class="moto-titulo">Honda Fan 160 2024</h3>
+                            <div class="moto-detalhes">
+                                <span class="ano-km">2024 • 0 km</span>
+                                <div class="preco-container">
+                                    <span class="preco">R$ 15.990</span>
+                                    <span class="parcelamento">ou 12x R$ 1.599</span>
+                                </div>
+                            </div>
+                            <div class="botoes-container">
+                                <button class="btn-detalhes">Ver detalhes</button>
+                                <button class="btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
                             </div>
                         </div>
-                        <button class="btn-detalhes">Ver detalhes</button>
-                    </div>
+                    </a>
                 </div>
 
                 <!-- Card de Moto 6 -->
                 <div class="moto-card">
                     <div class="moto-badge seminova">0KM ou Semi-Nova</div>
-                    <img src="img/6.png" alt="Yamaha NMAX" class="moto-imagem">
-                    <div class="moto-info">
-                        <h3 class="moto-titulo">Yamaha NMAX 125 2024</h3>
-                        <div class="moto-detalhes">
-                            <span class="ano-km">2024 • 0 km</span>
-                            <div class="preco-container">
-                                <span class="preco">R$ 18.990</span>
-                                <span class="parcelamento">ou 12x R$ 1.899</span>
+                    <a href="detalhes-moto.html?id=6">
+                        <img src="img/6.png" alt="Yamaha NMAX" class="moto-imagem">
+                        <div class="moto-info">
+                            <h3 class="moto-titulo">Yamaha NMAX 125 2024</h3>
+                            <div class="moto-detalhes">
+                                <span class="ano-km">2024 • 0 km</span>
+                                <div class="preco-container">
+                                    <span class="preco">R$ 18.990</span>
+                                    <span class="parcelamento">ou 12x R$ 1.899</span>
+                                </div>
+                            </div>
+                            <div class="botoes-container">
+                                <button class="btn-detalhes">Ver detalhes</button>
+                                <button class="btn-whatsapp">
+                                    <i class="fab fa-whatsapp"></i>
+                                </button>
                             </div>
                         </div>
-                        <button class="btn-detalhes">Ver detalhes</button>
-                    </div>
+                    </a>
                 </div>
             </div>
 

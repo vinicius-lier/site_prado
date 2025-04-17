@@ -36,7 +36,7 @@ header {
         
         ul {
             display: grid;
-            grid-template-columns: repeat(5, auto);
+            grid-template-columns: repeat(6, auto);
             gap: 20px;
 
             li {
@@ -251,7 +251,6 @@ section {
 }
 
 .motos-grid,
-.produtos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;

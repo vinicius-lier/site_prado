@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Área Administrativa - Prado Motors</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            background-image: radial-gradient(#ff0101, #000000);
+        }
+
+        header {
+            background-color: #000;
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            height: 50px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #beff1b;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 20px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .admin-title {
+            font-size: 2em;
+            font-family: "League Gothic", sans-serif;
+        }
+
+        .btn-add {
+            padding: 10px 20px;
+            background: #beff1b;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #a3e000;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: #beff1b;
+            color: #000;
+        }
+
+        .content {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid #fff;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #d9d9d9;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #fff;
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-save {
+            padding: 10px 20px;
+            background: #beff1b;
+            color: #000;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-save:hover {
+            background: #a3e000;
+        }
+
+        .btn-cancel {
+            padding: 10px 20px;
+            background: #ff4444;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: #cc0000;
+        }
+
+        .items-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .item-card {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .item-details {
+            color: #d9d9d9;
+            font-size: 0.9em;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit,
+        .btn-delete {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-edit {
+            background: #beff1b;
+            color: #000;
+        }
+
+        .btn-edit:hover {
+            background: #a3e000;
+        }
+
+        .btn-delete {
+            background: #ff4444;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background: #cc0000;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .item-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .item-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // Verificação de autenticação
+        if (!localStorage.getItem('adminToken')) {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Função para fazer logout
+        function logout() {
+            localStorage.removeItem('adminToken');
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <header>
+        <div class="header-container">
+            <img src="/img/logo loja.png" alt="Prado Motors" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="motos.html">Motos</a></li>
+                    <li><a href="boutique.html">Boutique</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="seguros.html">Seguros</a></li>
+                    <li><a href="#" onclick="logout()">Sair</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-container">
+        <div class="admin-header">
+            <h1 class="admin-title">Área Administrativa</h1>
+            <button class="btn-add" onclick="showForm()">Adicionar Novo</button>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('motos')">Motos</div>
+            <div class="tab" onclick="switchTab('servicos')">Serviços</div>
+            <div class="tab" onclick="switchTab('produtos')">Produtos</div>
+        </div>
+
+        <div class="content">
+            <!-- Formulário de Adição/Edição -->
+            <form id="itemForm" style="display: none;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="titulo">Título</label>
+                        <input type="text" id="titulo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preco">Preço</label>
+                        <input type="number" id="preco" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria">Categoria</label>
+                        <select id="categoria" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="moto">Moto</option>
+                            <option value="servico">Serviço</option>
+                            <option value="produto">Produto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" required>
+                            <option value="disponivel">Disponível</option>
+                            <option value="vendido">Vendido</option>
+                            <option value="reservado">Reservado</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagens">Imagens</label>
+                        <input type="file" id="imagens" multiple accept="image/*">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" onclick="hideForm()">Cancelar</button>
+                        <button type="submit" class="btn-save">Salvar</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Lista de Itens -->
+            <div id="itemsList" class="items-list">
+                <!-- Exemplo de item -->
+                <div class="item-card">
+                    <div class="item-info">
+                        <h3 class="item-title">Honda CG 160 Fan 2024</h3>
+                        <div class="item-details">
+                            <p>Preço: R$ 12.990</p>
+                            <p>Status: Disponível</p>
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="btn-edit" onclick="editItem(1)">Editar</button>
+                        <button class="btn-delete" onclick="deleteItem(1)">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showForm() {
+            document.getElementById('itemForm').style.display = 'block';
+            document.getElementById('itemsList').style.display = 'none';
+        }
+
+        function hideForm() {
+            document.getElementById('itemForm').style.display = 'none';
+            document.getElementById('itemsList').style.display = 'grid';
+        }
+
+        function switchTab(tab) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            // Here you would load the appropriate content for the selected tab
+        }
+
+        function editItem(id) {
+            showForm();
+            // Here you would load the item data into the form
+        }
+
+        function deleteItem(id) {
+            if (confirm('Tem certeza que deseja excluir este item?')) {
+                // Here you would handle the deletion
+            }
+        }
+
+        // Form submission
+        document.getElementById('itemForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would handle the form submission
+            hideForm();
+        });
+    </script>
+</body>
+</html> 
